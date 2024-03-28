@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto11
+    commands:
+      - echo "Installing Docker..."
+      - apt-get update && apt-get install -y docker.io
+
+  pre_build:
+    commands:
+      - echo "Building Docker image..."
+      - docker build -t android-build-image .
+
+  build:
+    commands:
+      - echo "Running Gradle commands..."
+      - docker run --rm -v $(pwd):/workspace android-build-image /bin/bash -c "./gradlew assembleDebug && ./gradlew assembleRelease"
+
+artifacts:
+  files:
+    - app/build/outputs/**/*.apk
