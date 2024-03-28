@@ -14,11 +14,11 @@ ENV ANDROID_HOME /opt/android-sdk
 ENV PATH ${PATH}:${ANDROID_HOME}/cmdline-tools/latest/bin:${ANDROID_HOME}/platform-tools
 
 # Download and install Android SDK
-RUN mkdir -p ${ANDROID_HOME} && \
-    cd ${ANDROID_HOME} && \
+RUN mkdir -p ${ANDROID_HOME}/cmdline-tools && \
+    cd ${ANDROID_HOME}/cmdline-tools && \
     wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip -O cmdline-tools.zip && \
-    unzip -q cmdline-tools.zip -d cmdline-tools && \
-    mv cmdline-tools cmdline-tools/latest && \
+    unzip -q cmdline-tools.zip -d . && \
+    mv tools latest && \
     rm cmdline-tools.zip
 
 # Accept Android SDK licenses
